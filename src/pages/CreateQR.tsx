@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,8 +7,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { toast } from "sonner";
 import QRCode from "qrcode";
 import { supabase } from "@/integrations/supabase/client";
+import { Bell } from "lucide-react";
 
 const CreateQR = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,6 +73,18 @@ const CreateQR = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <div className="absolute top-4 right-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate('/my-qr')}
+          className="gap-2"
+        >
+          <Bell className="h-4 w-4" />
+          Check Notifications
+        </Button>
+      </div>
+      
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Lost & Found QR Generator</CardTitle>
@@ -114,6 +129,14 @@ const CreateQR = () => {
                 <img src={qrCode} alt="QR Code" className="w-full max-w-xs mx-auto" />
               </div>
               
+              <div className="bg-muted p-3 rounded-lg">
+                <p className="text-xs text-muted-foreground mb-1">Your unique code</p>
+                <p className="text-lg font-bold font-mono">{uniqueCode}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Save this code to check scan notifications
+                </p>
+              </div>
+              
               <p className="text-sm text-muted-foreground">
                 Print this QR code and attach it to your valuable items
               </p>
@@ -126,6 +149,16 @@ const CreateQR = () => {
                   Create Another
                 </Button>
               </div>
+              
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => navigate(`/my-qr`)}
+                className="w-full gap-2"
+              >
+                <Bell className="h-4 w-4" />
+                View Scan Notifications
+              </Button>
             </div>
           )}
         </CardContent>
