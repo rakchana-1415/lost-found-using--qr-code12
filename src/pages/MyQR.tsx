@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ interface QRUser {
 }
 
 const MyQR = () => {
+  const navigate = useNavigate();
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [qrUser, setQrUser] = useState<QRUser | null>(null);
@@ -149,6 +151,15 @@ const MyQR = () => {
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-2xl mx-auto space-y-4 py-8">
+        <div className="flex justify-start mb-4">
+          <Button
+            variant="outline"
+            onClick={() => navigate('/')}
+          >
+            ← Generate New QR
+          </Button>
+        </div>
+        
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
